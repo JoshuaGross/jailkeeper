@@ -1,0 +1,33 @@
+{
+    "name": "jailkeeper",
+    "version": "0.0.1",
+    "description": "Monitor spawned child processes and make sure they don't read or write to files they shouldn't have access to. Jailkeeper is for managing cloud-based services that need to run potentially unsafe shell scripts.",
+    "main": "./lib/jailkeeper.js",
+    "scripts": {
+      "test": "mocha -R spec"
+    },
+    "repository": {
+        "type": "git",
+        "url": "TODO"
+    },
+    "keywords": [
+        "jail",
+        "chroot",
+        "truss",
+        "dtruss",
+        "dtrace"
+    ],
+    "author": {
+        "name": "Joshua Gross",
+        "email": "josh@spandex.io",
+        "url": "http://www.joshisgross.com"
+    },
+    "license": "MIT",
+    "devDependencies": {
+      "expect.js":"",
+      "sinon":""
+    },
+    "engine": {
+        "node": ">=0.6.0"
+    }
+}
