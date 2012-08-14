@@ -42,7 +42,7 @@ describe('JailKeeper', function () {
   });
   it('should prevent reading test source', function (done) {
     var jail = new JailKeeper({ cwd: './test/fixtures' });
-    var childProcess = jail.spawn('cat ../test.js');
+    var childProcess = jail.spawn('cat', ['../test.js']);
     var jailbroken = false;
     jail.on('jailbreak', function (code) {
       jailbroken = true;
@@ -54,7 +54,7 @@ describe('JailKeeper', function () {
   });
   it('should prevent reading package.json', function (done) {
     var jail = new JailKeeper({ cwd: './test/fixtures' });
-    var childProcess = jail.spawn('cat ../../package.json');
+    var childProcess = jail.spawn('cat', ['../../package.json']);
     var jailbroken = false;
     jail.on('jailbreak', function (code) {
       jailbroken = true;
