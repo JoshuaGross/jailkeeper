@@ -5,7 +5,7 @@ var JailKeeper = require('../');
 var spawn = require('child_process').spawn;
 
 describe('JailKeeper', function () {
-  /*it('should allow simple harmless echo', function (done) {
+  it('should allow simple harmless echo', function (done) {
     this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./echoHello', [], { cwd: './test/fixtures' });
@@ -111,7 +111,7 @@ describe('JailKeeper', function () {
       expect(jailbroken).to.be(true);
       done();
     });
-  });*/
+  });
 
   // This test is failing on Mac, but I think my copy of dtruss is failing
   it('should prevent writing to system binary via child process', function (done) {
