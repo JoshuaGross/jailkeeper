@@ -3,6 +3,7 @@ var fs = require('fs');
 var sinon = require('sinon');
 var JailKeeper = require('../');
 var spawn = require('child_process').spawn;
+var path = require('path');
 
 describe('JailKeeper', function () {
   it('should allow simple harmless echo', function (done) {
@@ -62,7 +63,9 @@ describe('JailKeeper', function () {
     var jail = new JailKeeper();
     var childProcess = jail.spawn('cat', ['../../package.json'], { cwd: './test/fixtures' });
     var jailbroken = false;
-    jail.on('jailbreak', function (code) {
+    jail.on('jailbreak', function (data) {
+      expect(data.mode).to.be('read');
+      expect(data.file).to.be(path.resolve('package.json'));
       jailbroken = true;
     });
     jail.on('exit', function (code) {
@@ -75,7 +78,9 @@ describe('JailKeeper', function () {
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./readPasswordFile', [], { cwd: './test/fixtures' });
     var jailbroken = false;
-    jail.on('jailbreak', function (code) {
+    jail.on('jailbreak', function (data) {
+      expect(data.mode).to.be('read');
+      expect(data.file).to.be('/etc/passwd');
       jailbroken = true;
     });
     jail.on('exit', function (code) {
@@ -92,7 +97,9 @@ describe('JailKeeper', function () {
       var jail = new JailKeeper();
       var childProcess = jail.spawn('./writeToParentDirectory', [], { cwd: './test/fixtures' });
       var jailbroken = false;
-      jail.on('jailbreak', function (code) {
+      jail.on('jailbreak', function (data) {
+        expect(data.mode).to.be('write');
+        expect(data.file).to.be(path.resolve('test/parentDirWrite.txt'));
         jailbroken = true;
       });
       jail.on('exit', function (code) {
@@ -109,7 +116,9 @@ describe('JailKeeper', function () {
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./writeToSystemBinary', [], { cwd: './test/fixtures' });
     var jailbroken = false;
-    jail.on('jailbreak', function (code) {
+    jail.on('jailbreak', function (data) {
+      expect(data.mode).to.be('write');
+      expect(data.file).to.be('/bin/bashOrSomethingLikeIt');
       jailbroken = true;
     });
     jail.on('exit', function (code) {
@@ -124,7 +133,9 @@ describe('JailKeeper', function () {
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./writeToSystemBinaryViaChild', [], { env: { PATH: '/usr/bin:/opt/local/bin' }, cwd: './test/fixtures' });
     var jailbroken = false;
-    jail.on('jailbreak', function (code) {
+    jail.on('jailbreak', function (data) {
+      expect(data.mode).to.be('write');
+      expect(data.file).to.be('/bin/bashOrSomethingLikeIt');
       jailbroken = true;
     });
     jail.on('exit', function (code) {
