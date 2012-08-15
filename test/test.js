@@ -84,11 +84,11 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent writing to parent directory', function (done) {
+    this.timeout(0);
     fs.stat('test/parentDirWrite.txt', function (deetz) {
       if (deetz) {
         fs.unlinkSync('test/parentDirWrite.txt');
       }
-      this.timeout(0);
       var jail = new JailKeeper();
       var childProcess = jail.spawn('./writeToParentDirectory', [], { cwd: './test/fixtures' });
       var jailbroken = false;
