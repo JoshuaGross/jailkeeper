@@ -5,7 +5,7 @@ var JailKeeper = require('../');
 var spawn = require('child_process').spawn;
 
 describe('JailKeeper', function () {
-  it('should allow simple harmless echo', function (done) {
+  /*it('should allow simple harmless echo', function (done) {
     this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./echoHello', [], { cwd: './test/fixtures' });
@@ -19,6 +19,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should allow writing within jail dir', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./echoHelloRedir', [], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -31,8 +32,9 @@ describe('JailKeeper', function () {
     });
   });
   it('should allow reading within jail dir', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
-    var childProcess = jail.spawn('./readRedirFile', [], { cwd: './test/fixtures' });
+    var childProcess = jail.spawn('./readRedirFile', [], { env: { PATH: '/usr/bin:/opt/local/bin' }, cwd: './test/fixtures' });
     var jailbroken = false;
     jail.on('jailbreak', function (code) {
       jailbroken = true;
@@ -43,6 +45,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent reading test source', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('cat', ['../test.js'], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -55,6 +58,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent reading package.json', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('cat', ['../../package.json'], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -67,6 +71,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent reading password file', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./readPasswordFile', [], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -79,6 +84,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent writing to parent directory', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./writeToParentDirectory', [], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -94,6 +100,7 @@ describe('JailKeeper', function () {
     });
   });
   it('should prevent writing to system binary', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
     var childProcess = jail.spawn('./writeToSystemBinary', [], { cwd: './test/fixtures' });
     var jailbroken = false;
@@ -104,12 +111,13 @@ describe('JailKeeper', function () {
       expect(jailbroken).to.be(true);
       done();
     });
-  });
+  });*/
 
   // This test is failing on Mac, but I think my copy of dtruss is failing
   it('should prevent writing to system binary via child process', function (done) {
+    this.timeout(0);
     var jail = new JailKeeper();
-    var childProcess = jail.spawn('./writeToSystemBinaryViaChild', [], { cwd: './test/fixtures' });
+    var childProcess = jail.spawn('./writeToSystemBinaryViaChild', [], { env: { PATH: '/usr/bin:/opt/local/bin' }, cwd: './test/fixtures' });
     var jailbroken = false;
     jail.on('jailbreak', function (code) {
       jailbroken = true;
