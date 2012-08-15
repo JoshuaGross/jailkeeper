@@ -36,12 +36,12 @@ This allows the jail to access binaries in /usr/bin and write to ./tmp/jail2.
 
 JailKeeper is an EventEmitter so you can attach to this event:
 
-   jail.on('jailbreak', function (message) {
-     // Super sad!
-     console.log('User tried to jailbreak by attempting to "' + message.mode + '"  the file ' + message.file);
-   });
-   jail.on('exit', function (code) {
-   });
+    jail.on('jailbreak', function (message) {
+      // Super sad!
+      console.log('User tried to jailbreak by attempting to "' + message.mode + '"  the file ' + message.file);
+    });
+    jail.on('exit', function (code) {
+      });
 
 The JailKeeper itself dies upon jailbreak, or when the child process otherwise executes. 
 
