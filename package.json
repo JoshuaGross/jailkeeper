@@ -1,6 +1,6 @@
 {
     "name": "jailkeeper",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "main": "./lib/jailkeeper.js",
     "scripts": {
       "test": "mocha -R spec"
