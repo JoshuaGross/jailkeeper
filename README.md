@@ -15,15 +15,20 @@ You know the drill:
 Usage
 =====
 
-    var spawn = require('child_process').spawn;
-    var childProcess = spawn('echo "hello world"', [], { cwd: './tmp/jail1' });
-    var jail = new JailKeeper(childProcess);
+Create a new JailKeeper and then call JailKeeper.spawn, just as you would use child_process.spawn:
+
+    var jail = new JailKeeper();
+    var childProcess = jail.spawn('echo "hello world"', [], { cwd: './tmp/jail1' });
+    console.log(childProcess.pid);
+    childProcess.stdout.on('data', function (data) {
+      console.log('Should say hello world: ', data.toString());
+    })
 
 JailKeeper attaches itself to that child process and ensures that only files within the child's initial CWD are read or written to. 
 
 You can allow a jailed process more rights:
 
-    var jail = new JailKeeper(childProcess, { read: ['/usr/bin'], write: './tmp/jail2' });
+    var jail = new JailKeeper(childProcess, { read: ['/usr/bin'], write: ['./tmp/jail2'] });
 
 This allows the jail to access binaries in /usr/bin and write to ./tmp/jail2. 
 
@@ -31,7 +36,7 @@ JailKeeper is an EventEmitter so you can attach to this event:
 
    jail.on('jailbreak', function (message) {
      // Super sad!
-     console.log('User tried to jailbreak by attempting to "' + message.mode + '" from the file ' + message.file);
+     console.log('User tried to jailbreak by attempting to "' + message.mode + '"  the file ' + message.file);
    });
    jail.on('exit', function (code) {
    });
