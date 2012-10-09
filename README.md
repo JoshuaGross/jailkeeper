@@ -1,3 +1,17 @@
+OFFICIALLY DEPRECATED
+=====================
+
+After testing JailKeeper I decided that it is definitely NOT the best approach to sandboxing applications, as services _have to access sensitive data before they're detected and killed_. In addition, because of the way processes are handled on UNIX systems, processes _are not necessarily killed immediately_, and there is actually no way to guarantee that a process can be killed immediately. It could take upwards of a full second to kill a rogue script, during which the script could delete or
+rewrite, or just read important files.
+
+I recommend _carefully_ using chroot jails, or, like Cloud9, spinning up new virtual servers in the cloud to execute arbitrary code. 
+
+What JailKeeper _can_ be useful for is analyzing scripts and flagging potentially-malicious users, but it should strictly be treated as a logging or monitoring tool, not a security option.
+
+JailKeeper is not currently being used in any production environments to my knowledge, and it's likely to remain that way. 
+
+You have been warned!
+
 JailKeeper
 ==========
 
